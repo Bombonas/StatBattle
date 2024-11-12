@@ -8,10 +8,14 @@ Fighter::Fighter(string fClass) {
 	setBaseStats(fClass);
 };
 
-Fighter::Fighter(string fClass, int level) {
-	wClass = fClass;
+Fighter::Fighter(int level) {
+	health = 600;
+	armor = 8;
+	attackDmg = 60;
+	speed = 5;
+	crit = 2;
+
 	wLevel = level;
-	setBaseStats(fClass);
 	setRandomStat(level);
 };
 
@@ -33,7 +37,7 @@ void Fighter::setBaseStats(string fClass) {
 	else if (fClass == "Archer") {
 		health = 400;
 		armor = 8;
-		attackDmg = 70;
+		attackDmg = 90;
 		speed = 12;
 		crit = 15;
 	}
@@ -78,7 +82,7 @@ void Fighter::setRandomStat(int level) {
 		break;
 	}
 
-	srand(time(0));
+	//srand(time(0));
 
 	for (int i = 0; i < points; ++i) {
 		int randomStat = rand() % 5;
@@ -117,8 +121,18 @@ int Fighter::getSpeed() const {
 	return speed;
 };
 
-void Fighter::displayStats() const {
-	cout << "=========================" << endl;
+void Fighter::displayStats(string title) const {
+	int totalLength = 25;
+	int titleLength = title.length();
+	int padding = (totalLength - titleLength - 2) / 2;  
+
+	cout << string(padding, '=') << " " << title << " " << string(padding, '=');
+	
+	if ((totalLength - titleLength - 2) % 2 != 0) {
+		cout << "=";
+	}
+
+	cout << endl;
 	cout << "Class: " << wClass << endl;
 	cout << "Level: " << wLevel << endl;
 	cout << "Health: " << health << endl;

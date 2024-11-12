@@ -7,7 +7,7 @@ class Fighter{
 public:
 	Fighter(string fClass);
 
-	Fighter(string fClass, int level);
+	Fighter(int level);
 
 	int attack();
 
@@ -17,7 +17,7 @@ public:
 
 	int getSpeed() const;
 
-	void displayStats() const;
+	void displayStats(string title) const;
 
 private: 
 	void setBaseStats(string fClass);
