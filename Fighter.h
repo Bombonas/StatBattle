@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -13,6 +14,9 @@ public:
 	void defend(int damage);
 
 private: 
+	void setBaseStats(string fClass);
+	void setRandomStat(int level);
+
 	int health;
 	int armor;
 	int attackDmg;
