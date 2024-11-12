@@ -1,12 +1,16 @@
 #include "Fighter.h"
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 
 Fighter::Fighter(string fClass) {
+	wClass = fClass;
 	setBaseStats(fClass);
 };
 
 Fighter::Fighter(string fClass, int level) {
+	wClass = fClass;
+	wLevel = level;
 	setBaseStats(fClass);
 	setRandomStat(level);
 };
@@ -79,7 +83,7 @@ void Fighter::setRandomStat(int level) {
 	for (int i = 0; i < points; ++i) {
 		int randomStat = rand() % 5;
 		switch (randomStat) {
-		case 0: health += 50; break;
+		case 0: health += 10; break;
 		case 1: armor += 1; break;
 		case 2: attackDmg += 5; break;
 		case 3: speed += 1; break;
@@ -87,3 +91,40 @@ void Fighter::setRandomStat(int level) {
 		}
 	}
 };
+
+int Fighter::attack() {
+	int baseDamage = attackDmg;
+
+	int critChance = rand() % 100;
+	if (critChance < crit) baseDamage *= 2;
+
+	return baseDamage;
+};
+
+void Fighter::defend(int damage) {
+	if (armor > 0) damage -= static_cast<int>(damage * (armor / 100.0));
+	if (damage < 0) damage = 0;
+	health -= damage;
+
+	if (health < 0) health = 0;
+};
+
+int Fighter::getHealth() const {
+	return health;
+};
+
+int Fighter::getSpeed() const {
+	return speed;
+};
+
+void Fighter::displayStats() const {
+	cout << "=========================" << endl;
+	cout << "Class: " << wClass << endl;
+	cout << "Level: " << wLevel << endl;
+	cout << "Health: " << health << endl;
+	cout << "Armor: " << armor << endl;
+	cout << "Attack Damage: " << attackDmg << endl;
+	cout << "Speed: " << speed << endl;
+	cout << "Crit Chance: " << crit << "%" << endl;
+	cout << "=========================\n" << endl;
+}

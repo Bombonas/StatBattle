@@ -13,6 +13,12 @@ public:
 
 	void defend(int damage);
 
+	int getHealth() const;
+
+	int getSpeed() const;
+
+	void displayStats() const;
+
 private: 
 	void setBaseStats(string fClass);
 	void setRandomStat(int level);
@@ -22,5 +28,7 @@ private:
 	int attackDmg;
 	int speed;
 	int crit;
+	string wClass;
+	int wLevel = 0;
 };
 
