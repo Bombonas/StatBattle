@@ -117,8 +117,16 @@ int Fighter::getHealth() const {
 	return health;
 };
 
+int Fighter::getwLevel() const {
+	return wLevel;
+};
+
 int Fighter::getSpeed() const {
 	return speed;
+};
+
+string Fighter::getwClass() const {
+	return wClass;
 };
 
 void Fighter::displayStats(string title) const {

@@ -6,10 +6,12 @@
 #include "Fighter.h"
 using namespace std;
 
-int const N_RECORDS = 30;
+int const N_RECORDS = 50;
 int const NUM_BATTLES = 100;
 string const  classes[] = { "Warrior", "Mage", "Archer", "Assassin", "Paladin", "Berserker" };
 int matrix[NUM_BATTLES][6] = { 0 };
+string enemyClasses[N_RECORDS];
+int enemyLevels[N_RECORDS];
 
 void initialMessage();
 void createCSV(const string& filename);
@@ -28,6 +30,8 @@ int main() {
         string randomClass = classes[rand() % 6];
         int randomLevel = rand() % 3 + 1;
         Fighter enemy(randomLevel);
+        enemyClasses[i] = randomClass;
+        enemyLevels[i] = randomLevel;
         enemy.displayStats("ENEMY " + to_string(i));
         for (int j = 0; j < 6; ++j) {
             Fighter adventurer(classes[j]);
@@ -36,18 +40,9 @@ int main() {
                 Fighter fighters[] = { adventurer , enemy };
 
                 while (fighters[0].getHealth() > 0 && fighters[1].getHealth() > 0) {
-                    int pF1 = turn % 2; // attaker 
-                    int pF2 = (turn + 1) % 2; // defender
+                    int pF1 = turn % 2; 
+                    int pF2 = (turn + 1) % 2; 
 
-                    /*if (fighters[pF2].getSpeed() > fighters[pF1].getSpeed()) {
-                        int speedAdvantageChance = rand() % 100;
-                        if ((fighters[pF2].getSpeed() - fighters[pF1].getSpeed())/2 < speedAdvantageChance) {
-                            // change attack/defend roles
-                            int temp = pF1;
-                            pF1 = pF2;
-                            pF2 = temp;
-                        }
-                    }*/
                     int damage = fighters[pF1].attack();
                     fighters[pF2].defend(damage);
                     ++turn;
@@ -98,7 +93,7 @@ void createCSV(const string& filename) {
             file << ",";
         }
     }
-    file << endl;
+    file << ",Enemy Class,Enemy Level" << endl;
 
     for (int i = 0; i < N_RECORDS; ++i) {
         for (int j = 0; j < 6; ++j) {
@@ -107,7 +102,7 @@ void createCSV(const string& filename) {
                 file << ",";
             }
         }
-        file << endl;
+        file << "," << enemyClasses[i] << "," << enemyLevels[i] << endl;
     }
     file.close();
 }

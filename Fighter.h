@@ -16,6 +16,10 @@ public:
 	int getHealth() const;
 
 	int getSpeed() const;
+	
+	int getwLevel() const;
+
+	string getwClass() const;
 
 	void displayStats(string title) const;
 
