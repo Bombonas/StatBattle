@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iomanip>
 #include <fstream>
+#include <thread>
 #include "Fighter.h"
 using namespace std;
 
@@ -27,10 +28,8 @@ int main() {
 
     for (int i = 0; i < N_RECORDS; ++i) {
         // Generate the enemy
-        string randomClass = classes[rand() % 6];
         int randomLevel = rand() % 3 + 1;
         Fighter enemy(randomLevel);
-        enemyClasses[i] = randomClass;
         enemyLevels[i] = randomLevel;
         enemy.displayStats("ENEMY " + to_string(i));
         for (int j = 0; j < 6; ++j) {
@@ -64,6 +63,9 @@ int main() {
         cout << endl;
     }*/
 
+    cout << "Press ENTER to end the program...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     return 0;
 }
 
@@ -77,6 +79,7 @@ void initialMessage() {
     cout << " /$$  \\ $$ | $$ /$$ /$$__  $$  | $$ /$$      | $$  \\ $$ /$$__  $$  | $$ /$$| $$ /$$| $$| $$_____/      \n";
     cout << "|  $$$$$$/ |  $$$$/|  $$$$$$$  |  $$$$/      | $$$$$$$/|  $$$$$$$  |  $$$$/|  $$$$/| $$|  $$$$$$$    \n";
     cout << " \\______/   \\___/   \\_______/   \\___/        |_______/  \\_______/   \\___/   \\___/  |__/ \\_______/   \n\n";
+    this_thread::sleep_for(chrono::seconds(1));
 };
 
 void createCSV(const string& filename) {
@@ -93,7 +96,7 @@ void createCSV(const string& filename) {
             file << ",";
         }
     }
-    file << ",Enemy Class,Enemy Level" << endl;
+    file << ",Enemy Level" << endl;
 
     for (int i = 0; i < N_RECORDS; ++i) {
         for (int j = 0; j < 6; ++j) {
@@ -102,7 +105,7 @@ void createCSV(const string& filename) {
                 file << ",";
             }
         }
-        file << "," << enemyClasses[i] << "," << enemyLevels[i] << endl;
+        file << "," << enemyLevels[i] << endl;
     }
     file.close();
 }
